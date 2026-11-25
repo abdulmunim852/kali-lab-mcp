@@ -1,0 +1,7 @@
+# Enable Kali Lab after installing it from this repository's marketplace.
+[plugins."kali-lab@kali-mcp"]
+enabled = true
+
+[plugins."kali-lab@kali-mcp".mcp_servers.kali_lab]
+enabled = true
+default_tools_approval_mode = "prompt"

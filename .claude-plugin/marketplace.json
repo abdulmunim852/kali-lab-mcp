@@ -1,0 +1,23 @@
+{
+  "name": "kali-mcp",
+  "interface": {
+    "displayName": "Kali MCP"
+  },
+  "plugins": [
+    {
+      "name": "kali-lab",
+      "source": {
+        "source": "local",
+        "path": "./plugins/kali-lab"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer tools",
+      "interface": {
+        "displayName": "Kali Lab"
+      }
+    }
+  ]
+}
