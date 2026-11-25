@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "kali-lab",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Connect Codex to an existing Kali Linux VM using Kali's official MCP package over SSH.",
   "author": {
     "name": "Kali Lab MCP"
@@ -16,7 +16,7 @@
         "displayName": "Kali Lab",
         "shortDescription": "Use Kali tools on your own lab VM through SSH.",
         "longDescription": "Connects Codex to the official Kali MCP package on a user-managed Kali VM. Requires a local SSH alias named kali-lab and the Kali API server running on the VM.",
-        "developerName": "Kali Lab MCP",
+        "developerName": "Abdul Munim",
         "category": "Developer tools",
         "capabilities": ["Read", "Write"],
         "logo": "./assets/kali-lab-icon.svg",
