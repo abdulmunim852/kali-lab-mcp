@@ -1,13 +1,11 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "kali-lab",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Connect Codex to an existing Kali Linux VM using Kali's official MCP package over SSH.",
   "author": {
     "name": "Kali Lab MCP"
   },
-  "logo": "./assets/kali-lab-icon.svg",
-  "composerIcon": "./assets/kali-lab-icon.svg",
   "license": "MIT",
   "keywords": ["kali", "security-testing", "mcp", "ssh"],
   "extensions": {
@@ -21,6 +19,8 @@
         "developerName": "Kali Lab MCP",
         "category": "Developer tools",
         "capabilities": ["Read", "Write"],
+        "logo": "./assets/kali-lab-icon.svg",
+        "composerIcon": "./assets/kali-lab-icon.svg",
         "defaultPrompt": [
           "Use Kali Lab to check the health of my Kali VM.",
           "Use Kali Lab to run an authorized Nmap scan against my lab target."
