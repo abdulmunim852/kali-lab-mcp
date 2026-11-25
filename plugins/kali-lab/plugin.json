@@ -6,12 +6,14 @@
   "author": {
     "name": "Kali Lab MCP"
   },
+  "logo": "./assets/kali-lab-icon.svg",
+  "composerIcon": "./assets/kali-lab-icon.svg",
   "license": "MIT",
   "keywords": ["kali", "security-testing", "mcp", "ssh"],
   "extensions": {
     "com.openai": {
       "requires_local_executor": true,
-      "onboardingSkill": "./skills/kali-setup/SKILL.md",
+      "onboardingSkill": "./skills/kali-windows-ssh-setup/SKILL.md",
       "interface": {
         "displayName": "Kali Lab",
         "shortDescription": "Use Kali tools on your own lab VM through SSH.",

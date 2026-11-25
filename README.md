@@ -4,39 +4,19 @@ A reusable Codex plugin that connects to the **official Kali `mcp-kali-server` p
 
 The plugin is in [`plugins/kali-lab`](plugins/kali-lab). The repository marketplace is in [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json), a repo marketplace format supported by Codex.
 
-## One-time Kali VM setup
+## First-time setup
 
-Run on Kali:
+Ask Codex to set up Kali Lab. The Windows SSH setup skill handles Windows-side key/configuration steps using PowerShell. It reads the public key from the Windows `.pub` file and returns a complete Kali Bash script directly in chat. The script installs `mcp-kali-server` and `openssh-server`, enables SSH, creates or repairs `~/.ssh`, appends the exact public key to `authorized_keys` only if missing, and applies `700`/`600` permissions. Paste that whole script into a Kali terminal as the normal Kali user.
 
-```bash
-sudo apt update
-sudo apt install -y mcp-kali-server openssh-server
-sudo systemctl enable --now ssh
-whoami
-hostname -I
-```
-
-Use the `kali` username and the current reachable IPv4 address. Start the API as the normal `kali` user:
+Then start the API in another Kali terminal as the normal user:
 
 ```bash
 kali-server-mcp
 ```
 
-Leave it running while Codex uses the bridge. The API defaults to `127.0.0.1:5000`; keep it bound to localhost. The official package exposes powerful tools, including arbitrary command execution. Only connect it to Codex if you understand and accept that access.
+Leave it running while Codex uses the bridge. The API defaults to `127.0.0.1:5000`; keep it bound to localhost. Do not run it as root. The official package exposes powerful tools, including arbitrary command execution. Only connect it to Codex if you understand and accept that access.
 
-## One-time Windows SSH setup
-
-For the first connection, ask Codex to perform the Windows-side setup using PowerShell. The plugin's onboarding skill tells Codex to:
-
-1. Ask you for Kali's current IPv4 address (from `hostname -I`) and username.
-2. Generate an SSH key only if one does not already exist.
-3. Show you the **public key line** in chat so you can paste it into Kali's `/home/kali/.ssh/authorized_keys`.
-4. Create or update the Windows `kali-lab` SSH host entry, preserving other SSH config entries.
-5. Verify key-based SSH and repair Windows OpenSSH Agent/ACL settings if needed.
-
-Do not share or commit the private key. The VM IP and SSH key are user-specific settings and are not stored in this repository.
-
-At the start of every new Kali work session, the plugin asks for Kali's current IPv4 and checks it against the Windows SSH config. If the VM received a new bridged DHCP address, provide the new IP and Codex updates the SSH entry.
+At the start of every new Kali work session, Codex first runs `whoami && hostname -I` through Kali MCP and compares the returned username and IP list with the Windows SSH config. It asks you for the IP only if the check fails, returns no usable address, or the configured address is missing from Kali's IP list. If a bridged DHCP address changed, provide the current IP and Codex updates the SSH entry.
 
 ## Install from this GitHub repository
 
@@ -58,11 +38,18 @@ Keep `kali-server-mcp` running on Kali, then ask Codex to call `server_health`. 
 
 The plugin instructions require Codex to show each Kali tool call, its arguments, and its full result in chat. Only scan systems you own or have explicit authorization to test.
 
-## Files
+## Skills
+
+- `kali-windows-ssh-setup` — configure Windows OpenSSH and read the actual public key safely.
+- `kali-vm-setup` — return the complete Kali Bash setup script and start the API as the normal user.
+- `kali-authorized-scan` — run and report authorized scans and tool calls.
+- `kali-connection-troubleshooting` — diagnose IP, SSH, host key, API, and plugin issues.
+
+## Other files
 
 - `plugins/kali-lab/plugin.json` — plugin identity and Codex display metadata.
+- `plugins/kali-lab/assets/kali-lab-icon.svg` — white-background icon with an original black dragon mark.
 - `plugins/kali-lab/mcp.json` — local stdio bridge launched over SSH.
-- `plugins/kali-lab/skills/kali-setup/SKILL.md` — setup, transparency, use, and troubleshooting workflow.
 - `.claude-plugin/marketplace.json` — repository plugin catalog.
 - `.codex/config.toml` — project-scoped plugin enablement and approval policy.
 
